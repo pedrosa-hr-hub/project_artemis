@@ -59,14 +59,16 @@ require('./config/auth')(passport)
 
     //public
         server.use(express.static(path.join(__dirname,'public')))
-
+        server.use(express.static(__dirname + ('/public')))
+        
         server.use((req, res, next) =>{
-            console.log("MIDDLEWARE ATIVO")
+            //console.log("MIDDLEWARE ATIVO")
             next();
         })
 //rotas
     
     server.get('/', (req, res)=>{
+
         Postagem.find().populate('categoria').lean().sort({data: 'desc'}).then((postagens)=>{
             res.render('index', {postagens: postagens})
         }).catch((err)=>{
